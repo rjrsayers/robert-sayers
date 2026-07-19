@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Sayers - Professional Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Lato', sans-serif;
+            color: #334155;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4, .serif {
+            font-family: 'Playfair Display', serif;
+            color: #0f172a;
+        }
+
+        /* Presentation Container & Scroll Snap */
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Individual Slides */
+        .slide {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 3rem 2rem;
+            background-color: #ffffff;
+        }
+
+        .slide:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .content-wrapper {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Abstract Premium Gradients */
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0; 
+            right: 0;
+            width: 50vw; 
+            height: 50vh;
+            background: radial-gradient(circle at bottom right, rgba(2,132,199,0.04) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Title Slide styling */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+        }
+        .title-slide h1 { color: white; font-size: 4.5rem; margin-bottom: 1rem; line-height: 1.1; }
+        .title-slide h2 { color: #38bdf8; font-size: 2rem; font-family: 'Lato', sans-serif; font-weight: 400; }
+        .title-slide p { color: #cbd5e1; font-size: 1.25rem; margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Slide Heading indicators */
+        .slide-header {
+            font-size: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        .slide-header::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #0284c7;
+        }
+
+        /* Layout Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* Informational Cards */
+        .card {
+            background: white;
+            padding: 2.25rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+        }
+        .card i { font-size: 2.25rem; color: #0284c7; margin-bottom: 1.5rem; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+        .card p { font-size: 1.05rem; color: #475569; }
+
+        /* High Impact Quotes */
+        .quote-block {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .quote-block h2 {
+            font-size: 2.75rem;
+            color: #0f172a;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+        .quote-block p { font-size: 1.35rem; font-style: normal; color: #475569; line-height: 1.8; }
+
+        /* Design Tags */
+        .retail-tag {
+            display: inline-flex;
+            align-items: center;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            border: 1px solid #fca5a5;
+        }
+        .pm-tag {
+            display: inline-flex;
+            align-items: center;
+            background: #e0f2fe;
+            color: #075985;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            border: 1px solid #7dd3fc;
+        }
+
+        /* Success Performance Metrics */
+        .metric { text-align: center; }
+        .metric .number { font-size: 4.5rem; font-weight: bold; color: #0284c7; font-family: 'Playfair Display', serif; line-height: 1; }
+        .metric .label { font-size: 1.2rem; font-weight: bold; color: #0f172a; margin-top: 0.75rem; }
+        .metric .desc { font-size: 0.95rem; color: #64748b; margin-top: 0.5rem; }
+
+        /* Typography spacing & alignment helpers */
+        .lead-text { font-size: 1.4rem; margin-bottom: 1.5rem; color: #1e293b; }
+        .body-text { font-size: 1.15rem; margin-bottom: 1rem; color: #475569; }
+        
+        ul.custom-list { list-style: none; }
+        ul.custom-list li { position: relative; padding-left: 2rem; margin-bottom: 1.25rem; font-size: 1.1rem; color: #475569; }
+        ul.custom-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #0284c7;
+        }
+
+        /* 90 Days Checklist Specifics */
+        .delivery-step {
+            display: flex;
+            align-items: flex-start;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #0284c7;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+        .delivery-step:hover {
+            transform: translateX(6px);
+        }
+        .delivery-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0284c7;
+            background: #e0f2fe;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.25rem;
+        }
+        .delivery-content h3 {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+        .delivery-content p {
+            font-size: 0.95rem;
+            color: #64748b;
+        }
+
+        /* Spacing Helper Classes */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-12 { margin-top: 3rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-12 { margin-bottom: 3rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .max-w-3xl { max-width: 48rem; }
+        
+        .mr-2, .me-2 { margin-right: 0.5rem; }
+        .mr-3, .me-3 { margin-right: 0.75rem; }
+
+        /* Scroll Progress Indicators */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #94a3b8;
+            font-size: 1.75rem;
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+        .title-slide .scroll-hint { color: rgba(255,255,255,0.4); }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-16px) translateX(-50%); }
+            60% { transform: translateY(-8px) translateX(-50%); }
+        }
+
+        /* Executive Interactive Navigation Dots (Hidden on Mobile) */
+        .slide-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            z-index: 100;
+        }
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(15, 23, 42, 0.25);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-dot:hover {
+            background-color: rgba(2, 132, 199, 0.6);
+            transform: scale(1.2);
+        }
+        .nav-dot.active {
+            background-color: #0284c7;
+            transform: scale(1.35);
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Responsive Mobile and Small Screen Engine */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+            }
+            .presentation-container {
+                scroll-snap-type: none;
+                height: auto;
+            }
+            .slide {
+                height: auto;
+                min-height: 100vh;
+                padding: 4rem 1.25rem;
+                scroll-snap-align: none;
+            }
+            .slide-nav {
+                display: none; /* Hide desktop specific slide indicators */
+            }
+            .scroll-hint {
+                display: none; /* Scrolling flows naturally on standard mobile formats */
+            }
+            
+            /* Responsive Font Scales */
+            .title-slide h1 {
+                font-size: 2.75rem;
+            }
+            .title-slide h2 {
+                font-size: 1.5rem;
+            }
+            .title-slide p {
+                font-size: 1.1rem;
+                margin-top: 1.5rem;
+            }
+            .slide-header {
+                font-size: 2.25rem;
+                margin-bottom: 1.75rem;
+            }
+            .lead-text {
+                font-size: 1.2rem;
+            }
+            .body-text {
+                font-size: 1.05rem;
+            }
+            .quote-block h2 {
+                font-size: 1.85rem;
+                margin-bottom: 1.25rem;
+            }
+            .quote-block p {
+                font-size: 1.15rem;
+                line-height: 1.6;
+            }
+            .metric .number {
+                font-size: 3.5rem;
+            }
+            
+            /* Responsive Stack Layouts */
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .card {
+                padding: 1.75rem;
+            }
+        }
+
+        /* Height-based media query to preserve vertical spacing on small laptops */
+        @media (max-height: 720px) and (min-width: 769px) {
+            .slide {
+                padding: 2rem 2rem;
+            }
+            .title-slide h1 { font-size: 3.5rem; }
+            .slide-header { font-size: 2.5rem; margin-bottom: 1.5rem; }
+            .lead-text { font-size: 1.25rem; margin-bottom: 1rem; }
+            .metric .number { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Dot Sidebar Indicators for Desktops -->
+<div class="slide-nav">
+    <div class="nav-dot active" onclick="scrollToSlide('slide-1')" title="Title Slide"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-2')" title="The Context"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-3')" title="The Pivot"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-4')" title="Skills Translation"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-5')" title="Performance Proof"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-6')" title="Change Implementation"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-7')" title="Professional Training"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-8')" title="Operational Resilience"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-9')" title="First 90 Days"></div>
+    <div class="nav-dot" onclick="scrollToSlide('slide-10')" title="Contact Details"></div>
+</div>
+
+<div class="presentation-container">
+
+    <!-- Slide 1: Welcome Intro -->
+    <div class="slide title-slide" id="slide-1">
+        <div class="content-wrapper">
+            <h1>Robert Sayers</h1>
+            <h2>Project Coordinator & Operational Manager</h2>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 2: Context Statement -->
+    <div class="slide" id="slide-2">
+        <div class="content-wrapper">
+            <div class="quote-block">
+                <h2>"Unexpected Item in the Bagging Area."</h2>
+                <p>A candidate with eighteen years of retail management experience might seem like an unusual fit in a PMO's candidate pool. But when you look past the store environment, you find a career built entirely on capacity planning, risk mitigation, and continuous process improvement.</p>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 3: The Pivot Statement -->
+    <div class="slide" id="slide-3">
+        <div class="content-wrapper">
+            <h2 class="slide-header">The Pivot: Why Now?</h2>
+            <div class="grid-2">
+                <div>
+                    <p class="lead-text">Retail management is the ultimate masterclass in <strong>reactive problem solving</strong>.</p>
+                    <p class="body-text">When a delivery lorry breaks down or three staff members call in sick during Christmas week, you don't form a committee. You reallocate resources, mitigate the risk to service levels, and deliver the day.</p>
+                    <p class="body-text">While I excel at this, I want to change <em>when</em> I solve problems. I am pivoting to project management to focus on <strong>proactive delivery</strong>—planning the capacity, tracking the milestones, and mitigating the risks <em>before</em> they hit the floor.</p>
+                </div>
+                <div>
+                    <div class="card" style="background: #f8fafc; border: 2px dashed #cbd5e1; height: auto;">
+                        <h3 style="color: #64748b; margin-bottom: 1rem;"><i class="fa-solid fa-fire-extinguisher me-2"></i> From: Firefighting</h3>
+                        <ul class="custom-list">
+                            <li>Managing immediate crises in real-time</li>
+                            <li>Reacting to sudden operational shortfalls</li>
+                            <li>Dynamic, reactive shift juggling</li>
+                        </ul>
+                        <hr style="border-color: #e2e8f0; margin: 1.5rem 0;">
+                        <h3 style="color: #0284c7; margin-bottom: 1rem;"><i class="fa-solid fa-map me-2"></i> To: Architecture</h3>
+                        <ul class="custom-list">
+                            <li>Mapping critical project paths and phases</li>
+                            <li>Forecasting resource & milestone constraints</li>
+                            <li>Securing planned, expected deliveries</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 4: Translation Matrix -->
+    <div class="slide" id="slide-4">
+        <div class="content-wrapper">
+            <div class="text-center mb-8">
+                <span style="display: inline-flex; align-items: center; background: #e2e8f0; color: #334155; padding: 0.5rem 1rem; border-radius: 999px; font-weight: bold; font-size: 0.9rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-server me-2"></i> Enterprise Grade Logic</span>
+            </div>
+            <h2 class="slide-header">My Skills Translate Directly</h2>
+            <p class="lead-text" style="max-width: 800px; margin-bottom: 2rem;">Modern retail operations rely on complex, high-throughput digital systems. While proprietary platforms differ, they share many of the same core planning, workflow, and resource principles.</p>
+            
+            <div class="grid-3">
+                <div class="card text-center">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <h3>Resource Scheduling</h3>
+                    <p>I managed complex shift patterns and resource budgets using <strong>Tesco Scheduler</strong>.</p>
+                    <div class="pm-tag"><i class="fa-solid fa-arrow-right-arrow-left me-2"></i> Maps to Jira & MS Project</div>
+                </div>
+                <div class="card text-center">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <h3>Data & Reporting</h3>
+                    <p>I tracked operational performance, daily metrics, and KPI delivery through <strong>Tableau</strong>.</p>
+                    <div class="pm-tag"><i class="fa-solid fa-arrow-right-arrow-left me-2"></i> Maps to PM Dashboards</div>
+                </div>
+                <div class="card text-center">
+                    <i class="fa-solid fa-ticket"></i>
+                    <h3>Issue Tracking</h3>
+                    <p>I resolved internal requests and managed contractor dependencies using <strong>Zendesk Colleague Help & Verisae</strong>.</p>
+                    <div class="pm-tag"><i class="fa-solid fa-arrow-right-arrow-left me-2"></i> Maps to ServiceNow</div>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 5: Performance Proof -->
+    <div class="slide" id="slide-5">
+        <div class="content-wrapper">
+            <h2 class="slide-header">Proof of Delivery</h2>
+            <p class="lead-text">I don't just "manage" processes. I improve them with a focus on metrics.</p>
+            
+            <div class="grid-3 mt-8">
+                <div class="metric">
+                    <div class="number">1.7%</div>
+                    <div class="label">Sales Increase</div>
+                    <div class="desc">Designed a continuous improvement tracker for top-selling lines, adopted regionally as best practice.</div>
+                </div>
+                <div class="metric">
+                    <div class="number">1st</div>
+                    <div class="label">Peak Performance Rank</div>
+                    <div class="desc">Used forecasting models to guide my Home Shopping team to 1st out of 26 stores during Christmas trading.</div>
+                </div>
+                <div class="metric">
+                    <div class="number">87%</div>
+                    <div class="label">Team Satisfaction</div>
+                    <div class="desc">Raised engagement from 63% in a single fiscal year through structured communication and performance planning.</div>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 6: Change Implementation -->
+    <div class="slide" id="slide-6">
+        <div class="content-wrapper">
+            <div class="grid-2">
+                <div>
+                    <h2 class="slide-header">Change Implementation</h2>
+                    <p class="lead-text">I have already coordinated complex operational changes within a live environment.</p>
+                    <ul class="custom-list">
+                        <li><strong>Digital Workflow Migration:</strong> Coordinated the successful implementation of a legacy-to-digital system transition.</li>
+                        <li><strong>Stakeholder Alignment:</strong> Worked with internal stakeholders to deliver training, support adoption, and achieve project milestones without disrupting daily trade.</li>
+                        <li><strong>Vendor Coordination:</strong> Managed dependencies with external contractors and brand representatives to protect SLAs.</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="card" style="background: #0f172a; color: white; border: none;">
+                        <i class="fa-solid fa-laptop-code" style="color: #38bdf8;"></i>
+                        <h3 style="color: white; margin-bottom: 1rem;">Scan As You Shop Rollout</h3>
+                        <p style="color: #cbd5e1; margin-bottom: 1.5rem;">Led the implementation of a major digital system on the shop floor.</p>
+                        <ul class="custom-list" style="color: #cbd5e1;">
+                            <li style="font-size: 1.05rem;">Tracked customer adoption metrics.</li>
+                            <li style="font-size: 1.05rem;">Delivered comprehensive team training.</li>
+                            <li style="font-size: 1.05rem;">Maintained continuous audit readiness.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 7: Continuous Training -->
+    <div class="slide" id="slide-7">
+        <div class="content-wrapper text-center">
+            <h2 class="slide-header text-center">Continuous Professional Development</h2>
+            <p class="lead-text max-w-3xl mx-auto mb-8">I am backing up eighteen years of practical operational experience with formal, modern methodology.</p>
+            
+            <div class="grid-2" style="max-width: 800px; margin: 0 auto;">
+                <div class="card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>Methodology</h3>
+                    <p>Actively self-studying towards formal <strong>PRINCE2</strong> and <strong>Agile</strong> qualifications to structure my practical experience.</p>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-robot"></i>
+                    <h3>Modern Tools</h3>
+                    <p>Recently completed the <strong>Master AI with Gemini</strong> certification through Santander Open Academy.</p>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 8: Resilience Values -->
+    <div class="slide" id="slide-8">
+        <div class="content-wrapper">
+            <div class="quote-block">
+                <h2 style="color: #0f172a;">Tested in the Ultimate Live Environment</h2>
+                <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Standard project tools like Jira and MS Project are essential assets that I am committed to mastering; however, the operational resilience required to manage a team through a complex workflows and time critical windows must be built in the field.</p>
+            </div>
+            
+            <div class="grid-3 mt-12">
+                <div>
+                    <h3 style="color: #0284c7; margin-bottom: 1rem;">Calm Under Pressure</h3>
+                    <p class="body-text">When things go wrong, I don't panic. I assess the data, reallocate resources, and keep the team focused.</p>
+                </div>
+                <div>
+                    <h3 style="color: #0284c7; margin-bottom: 1rem;">Clear Communicator</h3>
+                    <p class="body-text">I am entirely comfortable having direct conversations to align stakeholders and resolve conflicting priorities.</p>
+                </div>
+                <div>
+                    <h3 style="color: #0284c7; margin-bottom: 1rem;">Analytical Approach</h3>
+                    <p class="body-text">I don't guess. I use data and forecasting models to build capacity plans that actually work in reality.</p>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 9: What I Can Deliver in My First 90 Days -->
+    <div class="slide" id="slide-9">
+        <div class="content-wrapper">
+            <h2 class="slide-header">What I can deliver</h2>
+            <p class="lead-text" style="max-width: 800px; margin-bottom: 2.5rem;">A proactive transition plan mapped directly to supporting your team’s delivery, governance, and project pace.</p>
+            
+            <div class="grid-2" style="align-items: start; gap: 2rem;">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="delivery-step">
+                        <div class="delivery-number">01</div>
+                        <div class="delivery-content">
+                            <h3>Learn Methodology & Governance</h3>
+                            <p>Quickly absorb and align with your existing project management processes, lifecycle frameworks, and reporting guidelines.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="delivery-step">
+                        <div class="delivery-number -->">02</div>
+                        <div class="delivery-content">
+                            <h3>Master Local Project Tools</h3>
+                            <p>Become fully proficient in your specific Jira configurations, MS Project setups, or internal tracking databases.</p>
+                        </div>
+                    </div>
+
+                    <div class="delivery-step">
+                        <div class="delivery-number">03</div>
+                        <div class="delivery-content">
+                            <h3>Support Reporting & Communication</h3>
+                            <p>Take charge of scheduling, status reporting, and key documentation updates to free up senior team resource.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="delivery-step">
+                        <div class="delivery-number">04</div>
+                        <div class="delivery-content">
+                            <h3>Build Trusted Team Relationships</h3>
+                            <p>Connect with internal team members and external stakeholders to align handovers, identify dependencies, and prevent friction.</p>
+                        </div>
+                    </div>
+
+                    <div class="delivery-step">
+                        <div class="delivery-number">05</div>
+                        <div class="delivery-content">
+                            <h3>Drive Process Improvement</h3>
+                            <p>Apply my continuous improvement background to locate small operational gaps and optimise administrative workflows.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <i class="fa-solid fa-chevron-down scroll-hint"></i>
+    </div>
+
+    <!-- Slide 10: Contact -->
+    <div class="slide title-slide" id="slide-10" style="text-align: left;">
+        <div class="content-wrapper">
+            <div class="grid-2">
+                <div>
+                    <h1 style="font-size: 4rem;">Ready to Deliver.</h1>
+                    <p style="margin-left: 0; color: #cbd5e1; font-size: 1.25rem; line-height: 1.6;">I would welcome the opportunity to discuss how my experience in planning, resource management, and stakeholder coordination can ensure the successful delivery of your projects.</p>
+                </div>
+                <div>
+                    <div class="card" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
+                        <h3 style="color: white; margin-bottom: 1.5rem;">Let's Talk</h3>
+                        <ul style="list-style: none; color: white; font-size: 1.2rem;">
+                            <li style="margin-bottom: 1.25rem; display: flex; align-items: center;">
+                                <i class="fa-solid fa-envelope me-3" style="color: #38bdf8; width: 24px;"></i> 
+                                <span>rjrsayers@googlemail.com</span>
+                            </li>
+                            <li style="margin-bottom: 1.25rem; display: flex; align-items: center;">
+                                <i class="fa-solid fa-phone me-3" style="color: #38bdf8; width: 24px;"></i> 
+                                <span>+44 7923006938</span>
+                            </li>
+                            <li style="display: flex; align-items: center;">
+                                <i class="fa-solid fa-location-dot me-3" style="color: #38bdf8; width: 24px;"></i> 
+                                <span>Sussex, UK</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Click navigation handler
+    function scrollToSlide(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Intersection Observer to track active slide and update navigation dots
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        const observerOptions = {
+            root: document.querySelector('.presentation-container'),
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const slideId = entry.target.id;
+                    const slideIndex = parseInt(slideId.split('-')[1]) - 1;
+                    
+                    dots.forEach((dot, idx) => {
+                        if (idx === slideIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        slides.forEach(slide => observer.observe(slide));
+    });
+</script>
+
+</body>
+</html>
