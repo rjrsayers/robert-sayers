@@ -566,7 +566,7 @@
         <div class="content-wrapper">
             <div class="quote-block">
                 <h2 style="color: #0f172a;">Tested in the Ultimate Live Environment</h2>
-                <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Standard project tools like Jira and MS Project are essential assets that I am committed to mastering; however, the operational resilience required to manage a team through a complex workflows and time critical windows must be built in the field.</p>
+                <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Standard project tools like Jira and MS Project are essential assets that I am committed to mastering; however, the operational resilience required to manage a team through complex workflows and time critical windows must be built in the field.</p>
             </div>
             
             <div class="grid-3 mt-12">
@@ -604,7 +604,7 @@
                     </div>
                     
                     <div class="delivery-step">
-                        <div class="delivery-number -->">02</div>
+                        <div class="delivery-number">02</div>
                         <div class="delivery-content">
                             <h3>Master Local Project Tools</h3>
                             <p>Become fully proficient in your specific Jira configurations, MS Project setups, or internal tracking databases.</p>
@@ -676,21 +676,21 @@
 </div>
 
 <script>
-    // Click navigation handler
+    // Click navigation handler focusing layout viewport positioning
     function scrollToSlide(id) {
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
 
-    // Intersection Observer to track active slide and update navigation dots
+    // Intersection Observer built against main viewport targeting
     document.addEventListener('DOMContentLoaded', () => {
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.nav-dot');
         
         const observerOptions = {
-            root: document.querySelector('.presentation-container'),
+            root: null, // Default browser viewport for absolute DOM positioning elements
             threshold: 0.5
         };
         
